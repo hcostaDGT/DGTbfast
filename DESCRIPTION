@@ -1,0 +1,26 @@
+Package: DGTbfast
+Type: Package
+Title: Breaks For Additive Season and Trend (BFAST) at DGT
+Version: 0.7.0
+Date: 2019-11-01
+Author: Loic Dutrieux, Ben DeVries, Jan Verbesselt, Hugo Costa
+Maintainer: <loic.dutrieux@gmail.com>
+Description: Pre-process gridded time-series data in order for them to be
+    analyzed with change detection algorithms such as bfast. Uses classes from
+    the raster package and includes utilities to run the algorithms and
+    post-process the results.
+Depends:
+    R (>= 3.0.0),
+    raster,
+    igraph,
+    bfast,
+    strucchange,
+    gdalUtils,
+    stringr,
+    rgdal,
+    bitops,
+    zoo,
+    sp
+Imports: parallel, lubridate, openair, xts, seas, forecast, strucchange, utils
+License: GPL-3
+RoxygenNote: 6.1.1
