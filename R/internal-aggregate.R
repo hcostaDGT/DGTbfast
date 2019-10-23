@@ -22,15 +22,15 @@ NULL
 .aggregate.time.series <- function(x, aggregate) {
     
     if(casefold(aggregate)=="weekly"){
-        x   <- bfastSpatial:::.aggregate.daily.to.weekly(x)
+        x   <- DGTbfast:::.aggregate.daily.to.weekly(x)
     }else if(casefold(aggregate)=="fortnightly" | casefold(aggregate)=="biweekly"){
-        x   <- bfastSpatial:::.aggregate.daily.to.fortnight(x)
+        x   <- DGTbfast:::.aggregate.daily.to.fortnight(x)
     }else if(casefold(aggregate)=="monthly"){
-        x   <- bfastSpatial:::.aggregate.daily.to.monthly(x)
+        x   <- DGTbfast:::.aggregate.daily.to.monthly(x)
     }else if(casefold(aggregate)=="quarterly"){
-        x   <- bfastSpatial:::.aggregate.daily.to.quarterly(x)
+        x   <- DGTbfast:::.aggregate.daily.to.quarterly(x)
     }else if(casefold(aggregate)=="yearly" | casefold(aggregate)=="annually"){
-        x   <- bfastSpatial:::.aggregate.daily.to.yearly(x)
+        x   <- DGTbfast:::.aggregate.daily.to.yearly(x)
     }else{
         stop("Argument 'aggregate' wrongly defined.", call. = FALSE)
     }

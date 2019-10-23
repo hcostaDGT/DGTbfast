@@ -60,7 +60,7 @@
 #' 
 #' @examples
 #' \dontrun{
-#' x<-list.files("C:/Landsat/Preprocessed/Landsat204032", "_preprocessed_NDVI.tif$",  full.names = TRUE, recursive = TRUE)
+#' list.files("//DGT-692/Dgt-692- externo/Landsat8/Preprocessed/204032", "_preprocessed_NDVI.tif$",  full.names = TRUE, recursive = TRUE)
 #' data(fire3)
 #' 
 #' bfastPixel(fire3, interpolate="linear", cell=8761217, plot=TRUE, h=52, level=1, max.iter=5)
