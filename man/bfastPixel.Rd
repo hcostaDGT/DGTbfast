@@ -6,9 +6,9 @@
 \usage{
 bfastPixel(x, dates = NULL, start = NULL, end = NULL, interpolate,
   aggregate = "biweekly", cell = NULL, interactive = FALSE, f = 1,
-  min.thresh = NULL, sensor = NULL, plot = TRUE, h = 0.15,
-  season = c("dummy", "harmonic", "none"), max.iter = NULL,
-  breaks = NULL, hpc = "none", level = 0.05, type = "OLS-MOSUM")
+  plot = TRUE, h = 0.15, season = c("dummy", "harmonic", "none"),
+  max.iter = NULL, breaks = NULL, hpc = "none", level = 0.05,
+  type = "OLS-MOSUM")
 }
 \arguments{
 \item{x}{Character vector. Full path names to images or to parent folders containing images.}
@@ -26,10 +26,6 @@ bfastPixel(x, dates = NULL, start = NULL, end = NULL, interpolate,
 \item{interactive}{Logical. Select cell by clicking on an already plotted map? (see \code{\link[raster]{click}}). If \code{FALSE}, \code{cell} cannot be \code{NULL}.}
 
 \item{f}{Numeric. Factor by which to rescale values before running \code{bfast}. Defaults to 1 (no rescaling)}
-
-\item{min.thresh}{(Optional) Numeric. A minimum threshold below which NA's are assigned to data points. NOTE: the threshold is applied \emph{before} rescaling the data by \code{f} (see above)}
-
-\item{sensor}{(Optional) Character. Limit analysis to data from one or more sensors. Can be one or more of \code{c("ETM+", "ETM+ SLC-on", "ETM+ SLC-off", "TM", "OLI")} according to the sensor information returned by \code{\link{Lmetadata}}}
 
 \item{plot}{Logical. Plot the result? Defaults to \code{FALSE}.}
 
@@ -114,60 +110,20 @@ warning.
 }
 \examples{
 \dontrun{
-# run bfast on a pixel chosen from the plot window
-plot(tura, 6) # a cloudless scene from 2001
-bfast <- bfastPixel(tura, start=c(2005, 1), sensor="ETM+", interactive=TRUE)
-plot(bfast$bfast)
-print(targcell <- bfast$cell) # store cell index for follow-up analysis
-
-## change the model parameters
-# 1. harmonic order
-bfast <- bfastPixel(tura, cell=targcell, start=c(2005, 1), sensor="ETM+", order=3)
-plot(bfast$bfast)
-# 2. no trend
-bfast <- bfastPixel(tura, cell=targcell, start=c(2005, 1), sensor="ETM+", order=3, formula=response~harmon)
-plot(bfast$bfast)
-# 3. trend only
-bfast <- bfastPixel(tura, cell=targcell, start=c(2005, 1), sensor="ETM+", formula=response~trend)
-plot(bfast$bfast)
-}
-
-\dontrun{
 x<-list.files("C:/Landsat/Preprocessed/Landsat204032", "_preprocessed_NDVI.tif$",  full.names = TRUE, recursive = TRUE)
-dates=NULL
-#start=c(2015,1)
-#end=c(2018,365)
-start=NULL
-end=NULL
-interpolate="linear"
-aggregate="biweekly"
-cell=8761217
-interactive=FALSE
-sensor=NULL
-min.thresh=NULL
-plot=TRUE
-f=1
-h=0.30952380952381
-season = c('dummy', 'harmonic', 'none')
-max.iter=5
-breaks = NULL
-hpc = 'none'
-level=1
-type= 'OLS-MOSUM'
+data(fire3)
 
-
-x<-list.files("C:/Landsat/Preprocessed/Landsat204032", "_preprocessed_NDVI.tif$",  full.names = TRUE, recursive = TRUE)
-bfastPixel(x, interpolate="linear", cell=8761217, plot=TRUE, h=52, level=1, max.iter=5)
-bfastPixel(x, interpolate="periodic", cell=8761217, plot=TRUE, h=52, level=1, max.iter=5)
-bfastPixel(x, interpolate="periodic", aggregate="weekly", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
-bfastPixel(x, interpolate="periodic", aggregate="monthly", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
-bfastPixel(x, interpolate="periodic", aggregate="quarterly", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
-bfastPixel(x, start=c(2015,1), end=c(2018,365), interpolate="periodic", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
+bfastPixel(fire3, interpolate="linear", cell=8761217, plot=TRUE, h=52, level=1, max.iter=5)
+bfastPixel(fire3, interpolate="periodic", cell=8761217, plot=TRUE, h=52, level=1, max.iter=5)
+bfastPixel(fire3, interpolate="periodic", aggregate="weekly", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
+bfastPixel(fire3, interpolate="periodic", aggregate="monthly", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
+bfastPixel(fire3, interpolate="periodic", aggregate="quarterly", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
+bfastPixel(fire3, start=c(2015,1), end=c(2018,365), interpolate="periodic", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
 }
 
 }
 \seealso{
-\code{\link{DGTbfast}}
+\code{\link{bfastRaster}}
 }
 \author{
 Hugo Costa and Ben DeVries

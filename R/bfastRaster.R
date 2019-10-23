@@ -4,7 +4,7 @@
 #' 
 #' \strong{Overview}
 #' 
-#' \code{bfastSpatial} is theoretically designed to work on any generic raster time series, as long 
+#' \code{bfastRaster} is theoretically designed to work on any generic raster time series, as long 
 #' as a \code{dates} vector is provided. In the absence of a \code{dates} vector, \code{names(x)} 
 #' should correspond exactly to respective Landsat scene ID's. In this case, 
 #' \code{\link{Lmetadata}} is used to extract a dates vector, and subset by sensor if desired.
@@ -49,7 +49,6 @@
 #' @examples
 #' 
 #' \dontrun{
-#' x<-list.files("C:/Landsat/Preprocessed/Landsat204032", "_preprocessed_NDVI.tif$",  full.names = TRUE, recursive = TRUE)
 #' data(fire)
 #' x<-fire
 #' dates=NULL
@@ -74,26 +73,25 @@
 #' 
 #' data(fire)
 #' system.time(
-#'   out<-bfastSpatial(fire, interpolate="linear", h=0.30952380952381, season = c('harmonic'), level=1, max.iter=5, fast_bfast=TRUE, cores=2)
+#'   out<-bfastRaster(fire, interpolate="linear", h=0.30952380952381, season = c('harmonic'), level=1, max.iter=5, fast_bfast=TRUE, cores=2)
 #' )
 #' plot(out)
 #' 
-#' bfastSpatial(x, interpolate="periodic", cell=8761217, plot=TRUE, h=52, level=1, max.iter=5)
-#' bfastSpatial(x, interpolate="periodic", aggregate="weekly", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
-#' bfastSpatial(x, interpolate="periodic", aggregate="monthly", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
-#' bfastSpatial(x, interpolate="periodic", aggregate="quarterly", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
-#' bfastSpatial(x, start=c(2015,1), end=c(2018,365), interpolate="periodic", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
+#' bfastRaster(x, interpolate="periodic", cell=8761217, plot=TRUE, h=52, level=1, max.iter=5)
+#' bfastRaster(x, interpolate="periodic", aggregate="weekly", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
+#' bfastRaster(x, interpolate="periodic", aggregate="monthly", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
+#' bfastRaster(x, interpolate="periodic", aggregate="quarterly", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
+#' bfastRaster(x, start=c(2015,1), end=c(2018,365), interpolate="periodic", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
 #' }
 #' 
 #' @seealso 
 #' \code{\link{bfastPixel}}
 #' 
 #' @export
-bfastSpatial <- function (x, dates=NULL, start=NULL, end=NULL, interpolate, aggregate="biweekly", f=1, sensor=NULL, fast_bfast=TRUE, cores,
+bfastRaster <- function (x, dates=NULL, start=NULL, end=NULL, interpolate, aggregate="biweekly", f=1, fast_bfast=TRUE, cores,
                           h = 0.15, season = c('dummy', 'harmonic', 'none'), max.iter = NULL, 
                           breaks = NULL, hpc = 'none', level = 0.05, type= 'OLS-MOSUM'){
     
-    # library(strucchange)
     
     # get dates
     if(is.null(dates)) {
@@ -123,26 +121,6 @@ bfastSpatial <- function (x, dates=NULL, start=NULL, end=NULL, interpolate, aggr
     }
     
     
-    
-    # subset by sensor
-    if(!is.null(sensor) & !DGTbfast:::.isLandsat(x)){
-        warning("Scene info not available for subsetting based on sensor. Ignoring argument 'sensor'...")
-        sensor <- NULL
-    }
-    if(!is.null(sensor)){
-        if("ETM+" %in% sensor){
-            sensor <- c(sensor, "ETM+ SLC-on", "ETM+ SLC-off")
-        }
-        # s <- Lmetadata(names(names))
-        pixelts <- pixelts[which(info$Sensor %in% sensor)]
-        s <- info[which(info$Sensor %in% sensor), ]
-        dates <- s$Acquisition_date
-    }
-    
-    # # optional: apply a threshold (if supplied)
-    # if (!is.null(min.thresh))
-    #     pixelts[pixelts <= min.thresh] <- NA
-    
     # extract pixel time series JUST FOR TESTING
     # pixelts<- as.vector(x2[1])
     
@@ -153,9 +131,7 @@ bfastSpatial <- function (x, dates=NULL, start=NULL, end=NULL, interpolate, aggr
     if(is.null(end))   end <- c(substr(max(startend), 1, 4), substr(max(startend), 5, nchar(max(startend))))
     
     
-    fun<-function(x)#, h2 = h, season2 = season, max.iter2 = max.iter, 
-                  # breaks2 = breaks, hpc2 = hpc, level2 = level, type2 = type)
-        {
+    fun<-function(x){
         
         
         # optional: rescale values
