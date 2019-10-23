@@ -60,15 +60,14 @@
 #' 
 #' @examples
 #' \dontrun{
-#' list.files("//DGT-692/Dgt-692- externo/Landsat8/Preprocessed/204032", "_preprocessed_NDVI.tif$",  full.names = TRUE, recursive = TRUE)
-#' data(fire3)
+#' x<-list.files("//DGT-692/Dgt-692- externo/Landsat8/Preprocessed/204032", "_preprocessed_NDVI.tif$",  full.names = TRUE, recursive = TRUE)
 #' 
-#' bfastPixel(fire3, interpolate="linear", cell=8761217, plot=TRUE, h=52, level=1, max.iter=5)
-#' bfastPixel(fire3, interpolate="periodic", cell=8761217, plot=TRUE, h=52, level=1, max.iter=5)
-#' bfastPixel(fire3, interpolate="periodic", aggregate="weekly", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
-#' bfastPixel(fire3, interpolate="periodic", aggregate="monthly", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
-#' bfastPixel(fire3, interpolate="periodic", aggregate="quarterly", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
-#' bfastPixel(fire3, start=c(2015,1), end=c(2018,365), interpolate="periodic", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
+#' bfastPixel(x, interpolate="linear", cell=8761217, plot=TRUE, h=52, level=1, max.iter=5)
+#' bfastPixel(x, interpolate="periodic", cell=8761217, plot=TRUE, h=52, level=1, max.iter=5)
+#' bfastPixel(x, interpolate="periodic", aggregate="weekly", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
+#' bfastPixel(x, interpolate="periodic", aggregate="monthly", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
+#' bfastPixel(x, interpolate="periodic", aggregate="quarterly", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
+#' bfastPixel(x, start=c(2015,1), end=c(2018,365), interpolate="periodic", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
 #' }
 #' 
 #' @seealso 

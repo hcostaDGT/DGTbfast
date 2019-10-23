@@ -77,6 +77,12 @@
 #' )
 #' plot(out)
 #' 
+#' data(fire2)
+#' system.time(
+#'   out2<-bfastRaster(fire, interpolate="linear", h=0.30952380952381, season = c('harmonic'), level=1, max.iter=5, fast_bfast=TRUE)
+#' )
+#' plot(out2)
+#' 
 #' bfastRaster(x, interpolate="periodic", cell=8761217, plot=TRUE, h=52, level=1, max.iter=5)
 #' bfastRaster(x, interpolate="periodic", aggregate="weekly", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
 #' bfastRaster(x, interpolate="periodic", aggregate="monthly", cell=8761217, plot=TRUE, h=0.30952380952381, level=1, max.iter=5)
